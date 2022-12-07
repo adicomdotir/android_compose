@@ -1,26 +1,34 @@
 package ir.adicom.myapplication
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.adicom.myapplication.ui.theme.Compose_uiTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,225 +36,283 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             Compose_uiTheme {
-                // A surface container using the 'background' color from the theme
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colors.background
-//                ) {
-//                    Greeting("Android")
-//                }
-                Greeting()
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    TopAppBarProfile(context = LocalContext.current.applicationContext)
+
+                    ProfileEcommerce()
+                }
+            }
+        }
+    }
+}
+
+private val optionsList: ArrayList<OptionsData> = ArrayList()
+
+@Composable
+fun TopAppBarProfile(context: Context) {
+    TopAppBar(
+        title = {
+            Text(text = "Profile", maxLines = 1, overflow = TextOverflow.Ellipsis)
+        },
+        backgroundColor = MaterialTheme.colors.background,
+        elevation = 4.dp,
+        navigationIcon = {
+            IconButton(onClick = {
+                Toast.makeText(context, "Nav Button", Toast.LENGTH_SHORT).show()
+            }) {
+                Icon(
+                    Icons.Filled.ArrowBack,
+                    contentDescription = "Go back",
+                )
+            }
+        }
+    )
+}
+
+@Composable
+fun ProfileEcommerce(context: Context = LocalContext.current.applicationContext) {
+    var listPrepared by remember {
+        mutableStateOf(false)
+    }
+
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.Default) {
+            optionsList.clear()
+
+            // Add the data to optionsList
+            prepareOptionsData()
+
+            listPrepared = true
+        }
+    }
+
+
+    if (listPrepared) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            item {
+                UserDetails(context = context)
+            }
+
+            items(optionsList) { item ->
+                OptionsItemStyle(item = item, context = context)
             }
         }
     }
 }
 
 @Composable
-fun Greeting() {
-    LazyColumn(Modifier.fillMaxSize()) {
-        item {
-            TutorialHeader(text = "Row")
-            StyleableTutorialText(text = "1-) **Row** is a layout composable that places its children in a horizontal sequence.")
-            RowExample()
+private fun UserDetails(context: Context) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
 
-            TutorialHeader(text = "Column")
-            StyleableTutorialText(text = "2-) **Column** is a layout composable that places its children in a vertical sequence.")
-            ColumnExample()
+        // User's image
+//        Image(
+//            modifier = Modifier
+//                .size(72.dp)
+//                .clip(shape = CircleShape),
+//            painter = painterResource(id = R.drawable.victoria),
+//            contentDescription = "Your Image"
+//        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(weight = 3f, fill = false)
+                    .padding(start = 16.dp)
+            ) {
+
+                // User's name
+                Text(
+                    text = "Victoria Steele",
+                    style = TextStyle(
+                        fontSize = 22.sp,
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(2.dp))
+
+                // User's email
+                Text(
+                    text = "email123@email.com",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        color = Color.Gray,
+                        letterSpacing = (0.8).sp
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+            // Edit button
+            IconButton(
+                modifier = Modifier
+                    .weight(weight = 1f, fill = false),
+                onClick = {
+                    Toast.makeText(context, "Edit Button", Toast.LENGTH_SHORT).show()
+                }) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = Icons.Outlined.Edit,
+                    contentDescription = "Edit Details",
+                    tint = MaterialTheme.colors.primary
+                )
+            }
+
         }
     }
 }
 
 @Composable
-fun RowExample() {
-    TutorialText2(text = "Arrangement.Start")
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-        RowTexts()
-    }
+private fun OptionsItemStyle(item: OptionsData, context: Context) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = true) {
+                Toast
+                    .makeText(context, item.title, Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .padding(all = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
 
-    TutorialText2(text = "Arrangement.End")
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-        RowTexts()
-    }
-
-    TutorialText2(text = "Arrangement.Center")
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-        RowTexts()
-    }
-
-    TutorialText2(text = "Arrangement.SpaceEvenly")
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-        RowTexts()
-    }
-
-    TutorialText2(text = "Arrangement.SpaceAround")
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-        RowTexts()
-    }
-
-    TutorialText2(text = "Arrangement.SpaceBetween")
-
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        RowTexts()
-    }
-}
-
-@Composable
-fun ColumnExample() {
-    val modifier = Modifier
-        .padding(8.dp)
-        .fillMaxWidth()
-        .height(200.dp)
-        .background(Color.LightGray)
-
-    TutorialText2(text = "Arrangement.Top")
-    Column(modifier = modifier, verticalArrangement = Arrangement.Top) {
-        ColumnTexts()
-    }
-
-    TutorialText2(text = "Arrangement.Bottom")
-    Column(modifier = modifier, verticalArrangement = Arrangement.Bottom) {
-        ColumnTexts()
-    }
-
-    TutorialText2(text = "Arrangement.Center")
-    Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
-        ColumnTexts()
-    }
-
-    TutorialText2(text = "Arrangement.SpaceEvenly")
-    Column(modifier = modifier, verticalArrangement = Arrangement.SpaceEvenly) {
-        ColumnTexts()
-    }
-
-    TutorialText2(text = "Arrangement.SpaceAround")
-    Column(modifier = modifier, verticalArrangement = Arrangement.SpaceAround) {
-        ColumnTexts()
-    }
-
-    TutorialText2(text = "Arrangement.SpaceBetween")
-    Column(modifier = modifier, verticalArrangement = Arrangement.SpaceBetween) {
-        ColumnTexts()
-    }
-}
-
-@Composable
-fun TutorialText2(text: String, modifier: Modifier = Modifier) {
-
-    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.body2,
-            color = Color.Gray,
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
+        // Icon
+        Icon(
+            modifier = Modifier
+                .size(32.dp),
+            imageVector = item.icon,
+            contentDescription = item.title,
+            tint = MaterialTheme.colors.primary
         )
-    }
-}
 
-@Composable
-fun RowTexts() {
-    Text(
-        text = "Row1", modifier = Modifier
-            .background(Color(0xFFFF9800))
-            .padding(4.dp)
-    )
-    Text(
-        text = "Row2", modifier = Modifier
-            .background(Color(0xFFFFA726))
-            .padding(4.dp)
-    )
-    Text(
-        text = "Row3", modifier = Modifier
-            .background(Color(0xFFFFB74D))
-            .padding(4.dp)
-    )
-}
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(weight = 3f, fill = false)
+                    .padding(start = 16.dp)
+            ) {
 
-@Composable
-fun ColumnTexts() {
-    Text(
-        text = "Column1", modifier = Modifier
-            .background(Color(0xFF8BC34A))
-            .padding(4.dp)
-    )
-    Text(
-        text = "Column2", modifier = Modifier
-            .background(Color(0xFF9CCC65))
-            .padding(4.dp)
-    )
-    Text(
-        text = "Column3", modifier = Modifier
-            .background(Color(0xFFAED581))
-            .padding(4.dp)
-    )
-}
+                // Title
+                Text(
+                    text = item.title,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
 
-@Composable
-fun TutorialHeader(text: String, modifier: Modifier = Modifier) {
+                Spacer(modifier = Modifier.height(2.dp))
 
-    Text(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, top = 12.dp, bottom = 6.dp),
-        fontWeight = FontWeight.Bold,
-        fontSize = 22.sp,
-        text = text
-    )
-}
+                // Sub title
+                Text(
+                    text = item.subTitle,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        letterSpacing = (0.8).sp,
+                        color = Color.Gray
+                    )
+                )
 
-val boldRegex = Regex("(?<!\\*)\\*\\*(?!\\*).*?(?<!\\*)\\*\\*(?!\\*)")
+            }
 
-@Composable
-fun StyleableTutorialText(text: String, modifier: Modifier = Modifier, bullets:Boolean = true) {
-
-    var results: MatchResult? = boldRegex.find(text)
-    val boldIndexes = mutableListOf<Pair<Int, Int>>()
-    val keywords = mutableListOf<String>()
-
-    var finalText = text
-
-    while (results != null) {
-        keywords.add(results.value)
-        results = results.next()
-    }
-
-    keywords.forEach { keyword ->
-        val newKeyWord = keyword.removeSurrounding("**")
-        finalText = finalText.replace(keyword, newKeyWord)
-        val indexOf = finalText.indexOf(newKeyWord)
-        boldIndexes.add(Pair(indexOf, indexOf + newKeyWord.length))
-    }
-
-    val annotatedString = buildAnnotatedString {
-
-        append(finalText)
-
-        if (bullets) {
-            addStyle(style = SpanStyle(fontWeight = FontWeight.Bold), start = 0, end = 3)
-        }
-
-        // Add bold style to keywords that has to be bold
-        boldIndexes.forEach {
-            addStyle(
-                style = SpanStyle(
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xff64B5F6),
-                    fontSize = 15.sp
-
-                ),
-                start = it.first,
-                end = it.second
+            // Right arrow icon
+            Icon(
+                modifier = Modifier
+                    .weight(weight = 1f, fill = false),
+                imageVector = Icons.Outlined.Home,
+                contentDescription = item.title,
+                tint = Color.Black.copy(alpha = 0.70f)
             )
-
         }
-    }
 
-    Text(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, top = 12.dp, bottom = 12.dp),
-        fontSize = 16.sp,
-        text = annotatedString
+    }
+}
+
+private fun prepareOptionsData() {
+
+    val appIcons = Icons.Outlined
+
+    optionsList.add(
+        OptionsData(
+            icon = appIcons.Person,
+            title = "Account",
+            subTitle = "Manage your account"
+        )
+    )
+
+    optionsList.add(
+        OptionsData(
+            icon = appIcons.ShoppingCart,
+            title = "Orders",
+            subTitle = "Orders history"
+        )
+    )
+
+    optionsList.add(
+        OptionsData(
+            icon = appIcons.Person,
+            title = "Addresses",
+            subTitle = "Your saved addresses"
+        )
+    )
+
+    optionsList.add(
+        OptionsData(
+            icon = appIcons.Person,
+            title = "Saved Cards",
+            subTitle = "Your saved debit/credit cards"
+        )
+    )
+
+    optionsList.add(
+        OptionsData(
+            icon = appIcons.Settings,
+            title = "Settings",
+            subTitle = "App notification settings"
+        )
+    )
+
+    optionsList.add(
+        OptionsData(
+            icon = appIcons.Person,
+            title = "Help Center",
+            subTitle = "FAQs and customer support"
+        )
+    )
+
+    optionsList.add(
+        OptionsData(
+            icon = appIcons.Person,
+            title = "Offers and Coupons",
+            subTitle = "Offers and coupon codes for you"
+        )
+    )
+
+    optionsList.add(
+        OptionsData(
+            icon = appIcons.FavoriteBorder,
+            title = "Wishlist",
+            subTitle = "Items you saved"
+        )
     )
 }
+
+data class OptionsData(val icon: ImageVector, val title: String, val subTitle: String)
