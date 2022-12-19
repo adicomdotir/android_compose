@@ -29,7 +29,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun Compose_uiTheme(darkTheme: Boolean = true, content: @Composable () -> Unit) {
+fun Compose_uiTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
