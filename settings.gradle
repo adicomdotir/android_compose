@@ -14,3 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "compose_ui"
 include ':app'
+include ':features:profile'
+include ':features:list'
+include ':library:systemdesign'
+include ':domain:person'

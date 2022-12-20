@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import ir.adicom.myapplication.navigation.AppNavHost
 import ir.adicom.myapplication.navigation.BottomNavigationBar
 import ir.adicom.myapplication.navigation.bottomNavItems
-import ir.adicom.myapplication.ui.theme.Compose_uiTheme
+import ir.adicom.systemdesign.theme.Compose_uiTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
