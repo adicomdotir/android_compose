@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ir.adicom.list.ListScreen
-import ir.adicom.myapplication.ui.profile.ProfileScreen
+import ir.adicom.profile.ProfileScreen
 
 @Composable
 fun AppNavHost(navHostController: NavHostController, modifier: Modifier) {
