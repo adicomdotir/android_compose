@@ -1,6 +1,6 @@
-package com.aregyan.compose.network
+package ir.adicom.myapplication.network
 
-import com.aregyan.compose.network.model.DetailsApiModel
+import ir.adicom.myapplication.network.model.DetailsApiModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 

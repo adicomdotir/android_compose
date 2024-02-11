@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.details
+package ir.adicom.myapplication.ui.details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

@@ -1,7 +1,7 @@
 package ir.adicom.myapplication.di
 
-import com.aregyan.compose.network.DetailsApi
-import com.aregyan.compose.network.UsersApi
+import ir.adicom.myapplication.network.DetailsApi
+import ir.adicom.myapplication.network.UsersApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

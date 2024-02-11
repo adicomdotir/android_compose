@@ -1,6 +1,6 @@
-package ir.adicom.myapplication.details
+package ir.adicom.myapplication.ui.details
 
-import com.aregyan.compose.domain.Details
+import ir.adicom.myapplication.domain.Details
 import ir.adicom.myapplication.util.formatDate
 
 data class DetailsUiState(

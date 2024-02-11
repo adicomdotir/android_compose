@@ -1,6 +1,6 @@
-package ir.adicom.myapplication.users
+package ir.adicom.myapplication.ui.users
 
-import com.aregyan.compose.domain.User
+import ir.adicom.myapplication.domain.User
 
 data class UsersUiState(
     val list: List<User> = listOf(),

@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.theme
+package ir.adicom.myapplication.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*

@@ -1,8 +1,8 @@
-package com.aregyan.compose.database
+package ir.adicom.myapplication.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.aregyan.compose.domain.User
+import ir.adicom.myapplication.domain.User
 
 @Entity
 data class UserEntity constructor(

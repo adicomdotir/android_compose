@@ -1,8 +1,8 @@
-package com.aregyan.compose.database
+package ir.adicom.myapplication.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.aregyan.compose.domain.Details
+import ir.adicom.myapplication.domain.Details
 
 @Entity
 data class DetailsEntity constructor(

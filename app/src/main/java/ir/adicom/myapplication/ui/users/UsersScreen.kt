@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.users
+package ir.adicom.myapplication.ui.users
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.aregyan.compose.domain.User
+import ir.adicom.myapplication.domain.User
 import ir.adicom.myapplication.ui.components.NoNetwork
 
 @Composable

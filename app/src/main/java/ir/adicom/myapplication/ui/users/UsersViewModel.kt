@@ -1,11 +1,11 @@
-package ir.adicom.myapplication.users
+package ir.adicom.myapplication.ui.users
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aregyan.compose.repository.UsersRepository
+import ir.adicom.myapplication.repository.UsersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

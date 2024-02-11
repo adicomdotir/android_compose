@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.details
+package ir.adicom.myapplication.ui.details
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aregyan.compose.repository.DetailsRepository
+import ir.adicom.myapplication.repository.DetailsRepository
 import ir.adicom.myapplication.ui.Argument
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

@@ -7,8 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import ir.adicom.myapplication.details.DetailsScreen
-import ir.adicom.myapplication.users.UsersScreen
+import ir.adicom.myapplication.ui.details.DetailsScreen
+import ir.adicom.myapplication.ui.users.UsersScreen
 
 @Composable
 fun ComposeApp() {

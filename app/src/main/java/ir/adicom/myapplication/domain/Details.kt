@@ -1,4 +1,4 @@
-package com.aregyan.compose.domain
+package ir.adicom.myapplication.domain
 
 data class Details(
     val user: String? = "",

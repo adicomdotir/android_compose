@@ -1,7 +1,7 @@
-package com.aregyan.compose.network.model
+package ir.adicom.myapplication.network.model
 
 
-import com.aregyan.compose.database.DetailsEntity
+import ir.adicom.myapplication.database.DetailsEntity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

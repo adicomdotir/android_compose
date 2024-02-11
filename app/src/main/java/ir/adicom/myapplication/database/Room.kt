@@ -1,4 +1,4 @@
-package com.aregyan.compose.database
+package ir.adicom.myapplication.database
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow

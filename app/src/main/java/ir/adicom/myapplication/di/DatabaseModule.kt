@@ -1,9 +1,9 @@
-package com.aregyan.compose.di
+package ir.adicom.myapplication.di
 
 import android.content.Context
 import androidx.room.Room
-import com.aregyan.compose.database.UsersDao
-import com.aregyan.compose.database.AppDatabase
+import ir.adicom.myapplication.database.UsersDao
+import ir.adicom.myapplication.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

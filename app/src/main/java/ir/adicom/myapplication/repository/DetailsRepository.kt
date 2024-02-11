@@ -1,10 +1,10 @@
-package com.aregyan.compose.repository
+package ir.adicom.myapplication.repository
 
-import com.aregyan.compose.database.AppDatabase
-import com.aregyan.compose.database.asDomainModel
-import com.aregyan.compose.domain.Details
-import com.aregyan.compose.network.DetailsApi
-import com.aregyan.compose.network.model.asDatabaseModel
+import ir.adicom.myapplication.database.AppDatabase
+import ir.adicom.myapplication.database.asDomainModel
+import ir.adicom.myapplication.domain.Details
+import ir.adicom.myapplication.network.DetailsApi
+import ir.adicom.myapplication.network.model.asDatabaseModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
