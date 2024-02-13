@@ -25,7 +25,7 @@ interface UsersDao {
     fun insertDetails(detailsEntity: DetailsEntity)
 
     @Query("select * from BookmarkEntity WHERE username LIKE :username")
-    fun getByUsername(username: String): Flow<BookmarkEntity?>
+    suspend fun getByUsername(username: String): Flow<BookmarkEntity?>
 }
 
 @Database(

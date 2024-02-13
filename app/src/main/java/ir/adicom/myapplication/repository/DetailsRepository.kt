@@ -1,6 +1,7 @@
 package ir.adicom.myapplication.repository
 
 import ir.adicom.myapplication.database.AppDatabase
+import ir.adicom.myapplication.database.BookmarkEntity
 import ir.adicom.myapplication.database.asDomainModel
 import ir.adicom.myapplication.domain.Details
 import ir.adicom.myapplication.domain.User
@@ -29,7 +30,7 @@ class DetailsRepository @Inject constructor(
         }
     }
 
-    suspend fun addUser(username: String) {
+    fun addUser(username: String) {
         try {
             appDatabase.usersDao.insertBookmarkUser(
                 User(
@@ -41,6 +42,15 @@ class DetailsRepository @Inject constructor(
         } catch (e: Exception) {
             Timber.w(e)
         }
+    }
+
+    suspend fun getByUsername(username: String): Flow<BookmarkEntity?>? {
+        try {
+            return appDatabase.usersDao.getByUsername(username)
+        } catch (e: Exception) {
+            Timber.w(e)
+        }
+        return null
     }
 
 }
