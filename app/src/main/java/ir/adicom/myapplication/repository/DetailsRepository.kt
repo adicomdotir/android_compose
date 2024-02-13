@@ -3,6 +3,8 @@ package ir.adicom.myapplication.repository
 import ir.adicom.myapplication.database.AppDatabase
 import ir.adicom.myapplication.database.asDomainModel
 import ir.adicom.myapplication.domain.Details
+import ir.adicom.myapplication.domain.User
+import ir.adicom.myapplication.domain.asDatabaseModel
 import ir.adicom.myapplication.network.DetailsApi
 import ir.adicom.myapplication.network.model.asDatabaseModel
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +24,20 @@ class DetailsRepository @Inject constructor(
         try {
             val userDetails = detailsApi.getDetails(user)
             appDatabase.usersDao.insertDetails(userDetails.asDatabaseModel())
+        } catch (e: Exception) {
+            Timber.w(e)
+        }
+    }
+
+    suspend fun addUser(username: String) {
+        try {
+            appDatabase.usersDao.insertBookmarkUser(
+                User(
+                    id = 0,
+                    avatar = "",
+                    username = username
+                ).asDatabaseModel()
+            )
         } catch (e: Exception) {
             Timber.w(e)
         }

@@ -12,14 +12,27 @@ interface UsersDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUsers(users: List<UserEntity>)
 
+    @Query("select * from BookmarkEntity")
+    fun getBookmarkUsers(): Flow<List<BookmarkEntity>?>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertBookmarkUser(user: BookmarkEntity)
+
     @Query("select * from DetailsEntity WHERE user LIKE :user")
     fun getDetails(user: String): Flow<DetailsEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDetails(detailsEntity: DetailsEntity)
+
+    @Query("select * from BookmarkEntity WHERE username LIKE :username")
+    fun getByUsername(username: String): Flow<BookmarkEntity?>
 }
 
-@Database(entities = [UserEntity::class, DetailsEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [UserEntity::class, DetailsEntity::class, BookmarkEntity::class],
+    version = 4,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract val usersDao: UsersDao
 }

@@ -44,4 +44,11 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
+    fun bookmarkUser() {
+        username?.let {
+            viewModelScope.launch(Dispatchers.IO) {
+                detailsRepository.addUser(it)
+            }
+        }
+    }
 }

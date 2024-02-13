@@ -4,11 +4,11 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 
-private val DarkColorPalette = darkColorScheme(
+private val darkColorPalette = darkColorScheme(
     primary = Green700
 )
 
-private val LightColorPalette = lightColorScheme(
+private val lightColorPalette = lightColorScheme(
     primary = Green700
 
     /* Other default colors to override
@@ -27,9 +27,9 @@ fun JetpackComposeBoilerplateTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) {
-        DarkColorPalette
+        darkColorPalette
     } else {
-        LightColorPalette
+        lightColorPalette
     }
 
     MaterialTheme(
