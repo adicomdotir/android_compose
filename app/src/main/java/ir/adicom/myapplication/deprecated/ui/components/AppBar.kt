@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.ui.components
+package ir.adicom.myapplication.deprecated.ui.components
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme

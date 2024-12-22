@@ -1,10 +1,11 @@
-package ir.adicom.myapplication.ui.main
+package ir.adicom.myapplication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
-import ir.adicom.myapplication.ui.theme.ComposeWeatherAppTheme
+import ir.adicom.myapplication.ui.screens.home.HomeScreen
+import ir.adicom.myapplication.ui.screens.theme.ComposeWeatherAppTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ComposeWeatherAppTheme {
-
+                HomeScreen()
             }
         }
     }

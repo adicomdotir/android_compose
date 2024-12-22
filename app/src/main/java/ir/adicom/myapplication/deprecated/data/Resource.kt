@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.data
+package ir.adicom.myapplication.deprecated.data
 
 sealed class Resource<T> {
     class Success<T>(val data: T): Resource<T>()

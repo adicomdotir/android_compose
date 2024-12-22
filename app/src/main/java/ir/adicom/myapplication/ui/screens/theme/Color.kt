@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.ui.theme
+package ir.adicom.myapplication.ui.screens.theme
 
 import androidx.compose.ui.graphics.Color
 

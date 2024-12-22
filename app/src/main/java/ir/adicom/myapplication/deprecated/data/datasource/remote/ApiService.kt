@@ -1,4 +1,4 @@
-import ir.adicom.myapplication.data.model.MoviesResponse
+import ir.adicom.myapplication.deprecated.data.model.MoviesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 

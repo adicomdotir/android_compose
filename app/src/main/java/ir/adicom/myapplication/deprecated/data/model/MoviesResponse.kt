@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.data.model
+package ir.adicom.myapplication.deprecated.data.model
 
 import com.squareup.moshi.Json
 
