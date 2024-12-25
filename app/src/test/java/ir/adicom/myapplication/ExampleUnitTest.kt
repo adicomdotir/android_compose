@@ -18,4 +18,14 @@ class ExampleUnitTest {
     fun subtract_isCorrect() {
         assertEquals(2, 4 - 2)
     }
+
+    @Test
+    fun `check that model is true format`() {
+        assertEquals(0, 0)
+    }
+
+    @Test
+    fun `check that model is false format`() {
+        assertEquals(0, 1)
+    }
 }

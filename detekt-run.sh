@@ -1,0 +1,1 @@
+detekt -r html:detekt.html -c detekt-config.yml
