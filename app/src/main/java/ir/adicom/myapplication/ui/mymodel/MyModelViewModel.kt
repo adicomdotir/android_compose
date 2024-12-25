@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package android.template.ui.mymodel
+package ir.adicom.myapplication.ui.mymodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.adicom.myapplication.data.MyModelRepository
+import ir.adicom.myapplication.ui.mymodel.MyModelUiState.Error
+import ir.adicom.myapplication.ui.mymodel.MyModelUiState.Loading
+import ir.adicom.myapplication.ui.mymodel.MyModelUiState.Success
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import android.template.data.MyModelRepository
-import android.template.ui.mymodel.MyModelUiState.Error
-import android.template.ui.mymodel.MyModelUiState.Loading
-import android.template.ui.mymodel.MyModelUiState.Success
 import javax.inject.Inject
 
 @HiltViewModel

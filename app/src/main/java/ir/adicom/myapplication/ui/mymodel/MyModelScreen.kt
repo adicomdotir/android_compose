@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package android.template.ui.mymodel
+package ir.adicom.myapplication.ui.mymodel
 
-import android.template.ui.theme.MyApplicationTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,24 +26,29 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 
 @Composable
-fun MyModelScreen(modifier: Modifier = Modifier, viewModel: MyModelViewModel = hiltViewModel()) {
-    val items by viewModel.uiState.collectAsStateWithLifecycle()
+fun MyModelScreen(
+    modifier: Modifier = Modifier,
+    viewModel: MyModelViewModel = hiltViewModel(),
+    navController: NavHostController,
+) {
+    val items by viewModel.uiState.collectAsState()
     if (items is MyModelUiState.Success) {
         MyModelScreen(
             items = (items as MyModelUiState.Success).data,
             onSave = viewModel::addMyModel,
-            modifier = modifier
+            modifier = modifier,
+            navController = navController
         )
     }
 }
@@ -53,12 +57,20 @@ fun MyModelScreen(modifier: Modifier = Modifier, viewModel: MyModelViewModel = h
 internal fun MyModelScreen(
     items: List<String>,
     onSave: (name: String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
     Column(modifier) {
         var nameMyModel by remember { mutableStateOf("Compose") }
+        Button(onClick = {
+            navController.navigate("random-number")
+        }) {
+            Text("Go To RandomNumber Screen")
+        }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TextField(
@@ -73,23 +85,5 @@ internal fun MyModelScreen(
         items.forEach {
             Text("Saved item: $it")
         }
-    }
-}
-
-// Previews
-
-@Preview(showBackground = true)
-@Composable
-private fun DefaultPreview() {
-    MyApplicationTheme {
-        MyModelScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
-    }
-}
-
-@Preview(showBackground = true, widthDp = 480)
-@Composable
-private fun PortraitPreview() {
-    MyApplicationTheme {
-        MyModelScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
     }
 }

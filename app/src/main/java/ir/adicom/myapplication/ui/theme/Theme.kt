@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.template.ui.theme
+package ir.adicom.myapplication.ui.theme
 
 import android.app.Activity
 import android.os.Build

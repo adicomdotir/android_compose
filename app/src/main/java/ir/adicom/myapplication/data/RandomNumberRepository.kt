@@ -16,26 +16,31 @@
 
 package ir.adicom.myapplication.data
 
-import ir.adicom.myapplication.data.local.database.MyModel
-import ir.adicom.myapplication.data.local.database.MyModelDao
+import ir.adicom.myapplication.data.local.database.RandomNumber
+import ir.adicom.myapplication.data.local.database.RandomNumberDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-interface MyModelRepository {
-    val myModels: Flow<List<String>>
+interface RandomNumberRepository {
+    val randomNumbers: Flow<List<Int>>
 
-    suspend fun add(name: String)
+    val randomNumbersCount: Flow<Int>
+
+    suspend fun add(value: Int)
 }
 
-class DefaultMyModelRepository @Inject constructor(
-    private val myModelDao: MyModelDao
-) : MyModelRepository {
+class DefaultRandomNumberRepository @Inject constructor(
+    private val randomNumberDao: RandomNumberDao
+) : RandomNumberRepository {
 
-    override val myModels: Flow<List<String>> =
-        myModelDao.getMyModels().map { items -> items.map { it.name } }
+    override val randomNumbers: Flow<List<Int>> =
+        randomNumberDao.getRandomNumbers().map { items -> items.map { it.value } }
 
-    override suspend fun add(name: String) {
-        myModelDao.insertMyModel(MyModel(name = name))
+    override val randomNumbersCount: Flow<Int> =
+        randomNumberDao.getRandomNumbersCount()
+
+    override suspend fun add(value: Int) {
+        randomNumberDao.insertRandomNumber(RandomNumber(value = value))
     }
 }

@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package android.template.data.di
+package ir.adicom.myapplication.data.di
 
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ir.adicom.myapplication.data.DefaultMyModelRepository
+import ir.adicom.myapplication.data.DefaultRandomNumberRepository
+import ir.adicom.myapplication.data.MyModelRepository
+import ir.adicom.myapplication.data.RandomNumberRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import android.template.data.MyModelRepository
-import android.template.data.DefaultMyModelRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,6 +38,14 @@ interface DataModule {
     fun bindsMyModelRepository(
         myModelRepository: DefaultMyModelRepository
     ): MyModelRepository
+
+
+
+    @Singleton
+    @Binds
+    fun bindsRandomNumberRepository(
+        randomNumberRepository: DefaultRandomNumberRepository
+    ): RandomNumberRepository
 }
 
 class FakeMyModelRepository @Inject constructor() : MyModelRepository {

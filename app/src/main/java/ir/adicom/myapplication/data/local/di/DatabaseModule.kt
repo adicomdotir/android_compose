@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.template.data.local.di
+package ir.adicom.myapplication.data.local.di
 
 import android.content.Context
 import androidx.room.Room
@@ -23,8 +23,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import android.template.data.local.database.AppDatabase
-import android.template.data.local.database.MyModelDao
+import ir.adicom.myapplication.data.local.database.AppDatabase
+import ir.adicom.myapplication.data.local.database.MyModelDao
+import ir.adicom.myapplication.data.local.database.RandomNumberDao
 import javax.inject.Singleton
 
 
@@ -34,6 +35,11 @@ class DatabaseModule {
     @Provides
     fun provideMyModelDao(appDatabase: AppDatabase): MyModelDao {
         return appDatabase.myModelDao()
+    }
+
+    @Provides
+    fun provideRandomNumberDao(appDatabase: AppDatabase): RandomNumberDao {
+        return appDatabase.randomNumberDao()
     }
 
     @Provides
