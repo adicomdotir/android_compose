@@ -20,10 +20,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ir.adicom.myapplication.data.CategoryRepository
+import ir.adicom.myapplication.data.DefaultCategoryRepository
 import ir.adicom.myapplication.data.DefaultMyModelRepository
-import ir.adicom.myapplication.data.DefaultRandomNumberRepository
 import ir.adicom.myapplication.data.MyModelRepository
-import ir.adicom.myapplication.data.RandomNumberRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
@@ -43,9 +43,9 @@ interface DataModule {
 
     @Singleton
     @Binds
-    fun bindsRandomNumberRepository(
-        randomNumberRepository: DefaultRandomNumberRepository
-    ): RandomNumberRepository
+    fun bindCategoryRepository(
+        categoryRepository: DefaultCategoryRepository
+    ): CategoryRepository
 }
 
 class FakeMyModelRepository @Inject constructor() : MyModelRepository {

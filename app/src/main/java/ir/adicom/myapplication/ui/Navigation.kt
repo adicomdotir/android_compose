@@ -7,16 +7,26 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ir.adicom.myapplication.ui.add_edit_category.AddEditCategoryScreen
 import ir.adicom.myapplication.ui.mymodel.MyModelScreen
-import ir.adicom.myapplication.ui.random_number.RandomNumberScreen
 
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "main") {
-        composable("main") { MyModelScreen(navController = navController, modifier = Modifier.padding(16.dp)) }
+        composable("main") {
+            MyModelScreen(
+                navController = navController,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
         // TODO: Add more destinations
-        composable("random-number") { RandomNumberScreen(modifier = Modifier.padding(0.dp)) }
+        composable("add-category") {
+            AddEditCategoryScreen(
+                Modifier.padding(16.dp),
+                navController = navController
+            )
+        }
     }
 }

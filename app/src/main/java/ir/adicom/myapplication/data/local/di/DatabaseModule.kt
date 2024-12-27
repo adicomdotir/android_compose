@@ -24,8 +24,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.adicom.myapplication.data.local.database.AppDatabase
+import ir.adicom.myapplication.data.local.database.CategoryDao
 import ir.adicom.myapplication.data.local.database.MyModelDao
-import ir.adicom.myapplication.data.local.database.RandomNumberDao
 import javax.inject.Singleton
 
 
@@ -38,8 +38,8 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideRandomNumberDao(appDatabase: AppDatabase): RandomNumberDao {
-        return appDatabase.randomNumberDao()
+    fun provideCategoryDao(appDatabase: AppDatabase): CategoryDao {
+        return appDatabase.categoryDao()
     }
 
     @Provides
