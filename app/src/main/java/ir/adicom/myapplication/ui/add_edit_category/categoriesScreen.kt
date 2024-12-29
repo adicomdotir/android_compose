@@ -76,7 +76,10 @@ internal fun AddEditCategoryScreen(
             Button(
                 modifier = Modifier.width(96.dp),
                 onClick = {
-                    if (titleText.isNotEmpty() && isValidText(titleText)) {
+                    if (titleText.isNotEmpty() && isValidText(
+                            titleText
+                        )
+                    ) {
                         onSave(titleText)
                     } else {
                         Toast.makeText(

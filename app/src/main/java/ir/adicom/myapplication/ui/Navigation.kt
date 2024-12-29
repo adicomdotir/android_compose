@@ -8,13 +8,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ir.adicom.myapplication.ui.add_edit_category.AddEditCategoryScreen
+import ir.adicom.myapplication.ui.categories.CategoriesScreen
 import ir.adicom.myapplication.ui.mymodel.MyModelScreen
 
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "main") {
+    NavHost(navController = navController, startDestination = "categories") {
         composable("main") {
             MyModelScreen(
                 navController = navController,
@@ -24,6 +25,12 @@ fun MainNavigation() {
         // TODO: Add more destinations
         composable("add-category") {
             AddEditCategoryScreen(
+                Modifier.padding(16.dp),
+                navController = navController
+            )
+        }
+        composable("categories") {
+            CategoriesScreen(
                 Modifier.padding(16.dp),
                 navController = navController
             )
