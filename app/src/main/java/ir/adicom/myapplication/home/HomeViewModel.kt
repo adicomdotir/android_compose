@@ -1,15 +1,17 @@
 package ir.adicom.myapplication.home
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import ir.adicom.myapplication.models.NoteModel
 import ir.adicom.myapplication.models.dummyNotes
 import timber.log.Timber
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
     private val TAG = "HomeViewModel"
 
-    private val _notes = ArrayList<NoteModel>(dummyNotes())
-    val notes = _notes.toList()
+    val notes = mutableStateListOf<NoteModel>().apply {
+        addAll(dummyNotes())
+    }
 
     fun listItemOnClick(id: Int) {
         Timber.tag(TAG).d("listItemOnClick $id")
@@ -17,5 +19,9 @@ class HomeViewModel: ViewModel() {
 
     fun addNewNote() {
         Timber.tag(TAG).d("addNewNote")
+    }
+
+    fun saveNote(newNote: NoteModel) {
+        notes.add(newNote)
     }
 }
