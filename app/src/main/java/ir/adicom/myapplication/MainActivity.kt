@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ir.adicom.myapplication.ui
+package ir.adicom.myapplication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,7 +24,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
+import ir.adicom.myapplication.addNote.AddNoteScreen
 import ir.adicom.myapplication.ui.theme.MyApplicationTheme
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -37,7 +39,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainNavigation()
+                    AddNoteScreen(navigateBack = {
+                        Timber.d("$it")
+                    })
                 }
             }
         }
