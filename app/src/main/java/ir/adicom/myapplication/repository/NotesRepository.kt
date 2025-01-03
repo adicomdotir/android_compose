@@ -2,15 +2,23 @@ package ir.adicom.myapplication.repository
 
 import ir.adicom.myapplication.models.NoteModel
 import ir.adicom.myapplication.models.dummyNotes
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 class NotesRepository private constructor() {
-
     val items = arrayListOf<NoteModel>().apply {
         addAll(dummyNotes())
     }
 
-    companion object {
+    private val _newNoteInsertionListener = MutableSharedFlow<NoteModel>()
+    val newNoteInsertionListener: SharedFlow<NoteModel> = _newNoteInsertionListener.asSharedFlow()
 
+    private val _updateNoteInsertionListener = MutableSharedFlow<NoteModel>()
+    val updateNoteInsertionListener: SharedFlow<NoteModel> =
+        _updateNoteInsertionListener.asSharedFlow()
+
+    companion object {
         private var _instance: NotesRepository? = null
 
         fun getInstance(): NotesRepository {
@@ -18,32 +26,31 @@ class NotesRepository private constructor() {
                 _instance = NotesRepository()
 
             return _instance as NotesRepository
-
         }
-
     }
 
     fun getAll(): List<NoteModel> {
         return items
     }
 
-    fun get(id: Int) : NoteModel {
+    fun get(id: Int): NoteModel {
         return items.first { it.id == id }
     }
 
-    fun insert(item: NoteModel): Int {
+    suspend fun insert(item: NoteModel): Int {
         val newId = items.size + 1
         val newNote = item.copy(
             id = newId
         )
         items.add(newNote)
+        _newNoteInsertionListener.emit(item)
         return newId
     }
 
-    fun update(item: NoteModel) {
+    suspend fun update(item: NoteModel) {
         val itemIndex = items.indexOfFirst { it.id == item.id }
         items[itemIndex] = item
-
+        _updateNoteInsertionListener.emit(item)
     }
 
 }

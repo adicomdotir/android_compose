@@ -24,13 +24,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.adicom.myapplication.R
-import ir.adicom.myapplication.models.NoteModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AddNoteScreen(
     viewModel: AddNoteViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-    navigateBack: (NoteModel) -> Unit,
+    navigateBack: () -> Unit,
 ) {
     val title = viewModel.title.collectAsState()
     val description = viewModel.description.collectAsState()
@@ -38,7 +37,7 @@ fun AddNoteScreen(
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
             when (it) {
-                is AddNoteViewModel.Event.NavigateBack -> navigateBack(it.note)
+                is AddNoteViewModel.Event.NavigateBack -> navigateBack()
             }
         }
     }

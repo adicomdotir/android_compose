@@ -25,26 +25,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.gson.Gson
 import ir.adicom.myapplication.R
 import ir.adicom.myapplication.Routes
-import ir.adicom.myapplication.models.NoteModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-    newNote: String? = null,
     navigateNext: (String) -> Unit
 ) {
     val notes = viewModel.notesList
-
-    LaunchedEffect(key1 = newNote) {
-        if (newNote.isNullOrEmpty()) return@LaunchedEffect
-
-        val newNoteObj = Gson().fromJson(newNote, NoteModel::class.java)
-        viewModel.saveNote(newNoteObj)
-    }
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->

@@ -22,14 +22,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import ir.adicom.myapplication.addNote.AddNoteScreen
 import ir.adicom.myapplication.home.HomeScreen
@@ -53,15 +51,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.HOME
                     ) {
                         composable(Routes.HOME) {
-                            val newNoteJsonStr =
-                                navController.currentBackStackEntry
-                                    ?.savedStateHandle
-                                    ?.getStateFlow(
-                                        "new_note",
-                                        ""
-                                    )?.collectAsState()
                             HomeScreen(
-                                newNote = newNoteJsonStr?.value,
                                 navigateNext = { route ->
                                     navController.navigate(route)
                                 }
@@ -75,14 +65,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         ) {
-                            AddNoteScreen(navigateBack = { newNote ->
-                                val jsonStr = Gson().toJson(newNote)
-                                navController.previousBackStackEntry
-                                    ?.savedStateHandle
-                                    ?.set(
-                                        "new_note",
-                                        jsonStr
-                                    )
+                            AddNoteScreen(navigateBack = {
                                 navController.popBackStack()
                             })
                         }
