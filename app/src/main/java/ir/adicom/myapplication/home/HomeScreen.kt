@@ -29,6 +29,7 @@ import com.google.gson.Gson
 import ir.adicom.myapplication.R
 import ir.adicom.myapplication.Routes
 import ir.adicom.myapplication.models.NoteModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun HomeScreen(
@@ -36,13 +37,21 @@ fun HomeScreen(
     newNote: String? = null,
     navigateNext: (String) -> Unit
 ) {
-    val notes = viewModel.notes
+    val notes = viewModel.notesList
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = newNote) {
         if (newNote.isNullOrEmpty()) return@LaunchedEffect
 
         val newNoteObj = Gson().fromJson(newNote, NoteModel::class.java)
         viewModel.saveNote(newNoteObj)
+    }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is HomeViewModel.HomeEvent.NavigateNext -> navigateNext(event.route)
+            }
+        }
     }
 
     Scaffold(
@@ -70,7 +79,7 @@ fun HomeScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navigateNext(Routes.ADD_NOTE)
+                    navigateNext(Routes.ADD_NOTE + "/-1")
                 },
                 containerColor = MaterialTheme.colorScheme.tertiary
             ) {

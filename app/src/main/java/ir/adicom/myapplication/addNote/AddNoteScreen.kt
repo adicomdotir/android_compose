@@ -38,7 +38,7 @@ fun AddNoteScreen(
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
             when (it) {
-                is AddNoteViewModel.Event.NavigateBack -> navigateBack(it.noteModel)
+                is AddNoteViewModel.Event.NavigateBack -> navigateBack(it.note)
             }
         }
     }

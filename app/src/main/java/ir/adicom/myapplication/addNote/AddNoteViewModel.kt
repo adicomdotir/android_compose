@@ -1,39 +1,50 @@
 package ir.adicom.myapplication.addNote
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.adicom.myapplication.models.NoteModel
+import ir.adicom.myapplication.repository.NotesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
-class AddNoteViewModel : ViewModel() {
-    private val _title = MutableStateFlow("")
-    private val _description = MutableStateFlow("")
+class AddNoteViewModel(
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
+
+    private val TAG = "AddNoteViewModel"
+
+    private val repository: NotesRepository = NotesRepository.getInstance()
+    private var _noteId: Int = -1
+    private var _title: MutableStateFlow<String> = MutableStateFlow("")
     val title = _title.asStateFlow()
+    private var _description = MutableStateFlow<String>("")
     val description = _description.asStateFlow()
+
     private val _event = MutableSharedFlow<Event>()
     val event = _event.asSharedFlow()
 
-    fun backIconOnClick() {
-        val noteModel = NoteModel(
-            id = -1,
-            title = _title.value,
-            description = _description.value
-        )
+    init {
+        val noteId = savedStateHandle
+            .get<Int>("id") ?: -1
+        _noteId = noteId
 
-        // SAVE
+        Timber.tag(TAG).d("init: noteId = $noteId")
 
-        // Navigate
-        viewModelScope.launch(Dispatchers.Main) {
-            _event.emit(Event.NavigateBack(noteModel))
+        if (noteId != -1) {
+            val note = repository.get(noteId)
+            _title.value = note.title
+            _description.value = note.description
         }
     }
 
     fun titleOnValueChange(value: String) {
+        Timber.tag(TAG).d("titleOnValueChange: title = ${title.value}")
         _title.value = value
     }
 
@@ -41,7 +52,26 @@ class AddNoteViewModel : ViewModel() {
         _description.value = value
     }
 
-    sealed class Event {
-        data class NavigateBack(val noteModel: NoteModel) : Event()
+    fun backIconOnClick() {
+
+        val noteModel = NoteModel(
+            id = _noteId,
+            title = _title.value,
+            description = _description.value,
+        )
+
+        // Save Note
+
+        // Navigate Back
+        viewModelScope.launch(Dispatchers.Main) {
+            _event.emit(Event.NavigateBack(noteModel))
+        }
+
     }
+
+
+    sealed class Event {
+        data class NavigateBack(val note: NoteModel) : Event()
+    }
+
 }
