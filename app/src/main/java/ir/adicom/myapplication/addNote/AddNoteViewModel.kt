@@ -13,21 +13,25 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+const val TAG = ""
+
 class AddNoteViewModel(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val TAG = "AddNoteViewModel"
 
     private val repository: NotesRepository = NotesRepository.getInstance()
     private var _noteId: Int = -1
     private var _title: MutableStateFlow<String> = MutableStateFlow("")
     val title = _title.asStateFlow()
-    private var _description = MutableStateFlow<String>("")
+    private var _description = MutableStateFlow("")
     val description = _description.asStateFlow()
 
     private val _event = MutableSharedFlow<Event>()
     val event = _event.asSharedFlow()
+
+    private val _showConfirmationDialog: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val showConfirmationDialog = _showConfirmationDialog.asStateFlow()
 
     init {
         val noteId = savedStateHandle
@@ -72,6 +76,25 @@ class AddNoteViewModel(
             _event.emit(Event.NavigateBack)
         }
 
+    }
+
+    fun hideConfirmationDialog() {
+        _showConfirmationDialog.value = false
+    }
+
+    fun showConfirmationDialog() {
+        _showConfirmationDialog.value = true
+    }
+
+    fun deleteNote() = viewModelScope.launch {
+        val itemId = _noteId
+        repository.delete(itemId)
+
+        hideConfirmationDialog()
+        // Navigate Back
+        viewModelScope.launch(Dispatchers.Main) {
+            _event.emit(Event.NavigateBack)
+        }
     }
 
 

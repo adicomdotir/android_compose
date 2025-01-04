@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.adicom.myapplication.R
+import ir.adicom.myapplication.addNote.components.ConfirmationDialog
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -33,6 +34,7 @@ fun AddNoteScreen(
 ) {
     val title = viewModel.title.collectAsState()
     val description = viewModel.description.collectAsState()
+    val showConfirmationDialog = viewModel.showConfirmationDialog.collectAsState()
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
@@ -66,7 +68,11 @@ fun AddNoteScreen(
             Icon(
                 painter = painterResource(id = R.drawable.baseline_delete_24),
                 contentDescription = null,
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier
+                    .size(20.dp)
+                    .clickable {
+                        viewModel.showConfirmationDialog()
+                    },
                 tint = Color.White
             )
         }
@@ -90,6 +96,17 @@ fun AddNoteScreen(
                 .fillMaxWidth()
                 .weight(1f),
             placeholder = { Text(text = "Enter Description") }
+        )
+    }
+
+    if (showConfirmationDialog.value) {
+        ConfirmationDialog(
+            dismissButton = {
+                viewModel.hideConfirmationDialog()
+            },
+            confirmButton = {
+                viewModel.deleteNote()
+            },
         )
     }
 }
