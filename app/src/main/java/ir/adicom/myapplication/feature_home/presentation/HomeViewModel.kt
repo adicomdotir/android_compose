@@ -1,0 +1,70 @@
+package ir.adicom.myapplication.feature_home.presentation
+
+import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import ir.adicom.myapplication.Routes
+import ir.adicom.myapplication.feature_home.domain.GetNotesUseCase
+import ir.adicom.myapplication.feature_home.domain.ListenNotesUseCase
+import ir.adicom.myapplication.feature_home.domain.NotesEvent
+import ir.adicom.myapplication.core.domain.models.NoteModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
+import timber.log.Timber
+
+class HomeViewModel : ViewModel() {
+    private val TAG = "HomeViewModel"
+
+    private val getNotesUseCase = GetNotesUseCase.getInstance()
+    private val listenNotesUseCase = ListenNotesUseCase.getInstance()
+    val notesList = mutableStateListOf<NoteModel>()
+    private val _eventFlow = MutableSharedFlow<HomeEvent>()
+    val eventFlow: SharedFlow<HomeEvent> = _eventFlow.asSharedFlow()
+    private val _scope = viewModelScope
+
+    init {
+        _scope.launch(Dispatchers.IO) {
+            val items = getNotesUseCase.execute()
+            delay(500)
+            notesList.addAll(items)
+        }
+
+        _scope.launch {
+            listenNotesUseCase.execute().collect { event ->
+                when (event) {
+                    is NotesEvent.Insert -> notesList.add(0, event.value)
+
+                    is NotesEvent.Update -> {
+                        val itemIndex = notesList.indexOfFirst { it.id == event.value.id }
+
+                        if (itemIndex != -1) {
+                            notesList[itemIndex] = event.value
+                        }
+                    }
+
+                    is NotesEvent.Delete -> {
+                        val itemIndex = notesList.indexOfFirst { it.id == event.value }
+
+                        if (itemIndex != -1) {
+                            notesList.removeAt(itemIndex)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun listItemOnClick(id: Int) = _scope.launch(Dispatchers.Main) {
+        Timber.tag(TAG).d("listItemOnClick: $id")
+        val route = Routes.ADD_NOTE + "/$id"
+        _eventFlow.emit(HomeEvent.NavigateNext(route))
+    }
+
+    sealed class HomeEvent {
+        data class NavigateNext(val route: String) : HomeEvent()
+    }
+}

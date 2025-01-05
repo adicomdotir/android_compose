@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.addNote.components
+package ir.adicom.myapplication.feature_addNote.presentation.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button

@@ -1,6 +1,6 @@
-package ir.adicom.myapplication.models
+package ir.adicom.myapplication.core.domain.models
 
-import ir.adicom.myapplication.data.local.NoteEntity
+import ir.adicom.myapplication.core.data.local.NoteEntity
 
 data class NoteModel(
     val id: Int,

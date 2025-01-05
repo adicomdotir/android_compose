@@ -1,11 +1,11 @@
-package ir.adicom.myapplication.data.local
+package ir.adicom.myapplication.core.data.local
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ir.adicom.myapplication.ComposeApplication
 
-@Database(entities = [NoteEntity::class], version = 1)
+@Database(entities = [NoteEntity::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 

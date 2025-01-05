@@ -29,8 +29,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
-import ir.adicom.myapplication.addNote.AddNoteScreen
-import ir.adicom.myapplication.home.HomeScreen
+import ir.adicom.myapplication.feature_addNote.presentation.AddNoteScreen
+import ir.adicom.myapplication.feature_home.presentation.HomeScreen
 import ir.adicom.myapplication.ui.theme.MyApplicationTheme
 
 @AndroidEntryPoint

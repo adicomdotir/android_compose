@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.addNote
+package ir.adicom.myapplication.feature_addNote.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.adicom.myapplication.R
-import ir.adicom.myapplication.addNote.components.ConfirmationDialog
+import ir.adicom.myapplication.feature_addNote.presentation.components.ConfirmationDialog
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.home
+package ir.adicom.myapplication.feature_home.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

@@ -1,4 +1,4 @@
-package ir.adicom.myapplication.data.local
+package ir.adicom.myapplication.core.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
