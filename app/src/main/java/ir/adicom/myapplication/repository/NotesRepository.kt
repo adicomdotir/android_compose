@@ -1,15 +1,15 @@
 package ir.adicom.myapplication.repository
 
+import ir.adicom.myapplication.data.local.AppDatabase
+import ir.adicom.myapplication.data.local.toModel
 import ir.adicom.myapplication.models.NoteModel
-import ir.adicom.myapplication.models.dummyNotes
+import ir.adicom.myapplication.models.toEntity
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 class NotesRepository private constructor() {
-    val items = arrayListOf<NoteModel>().apply {
-        addAll(dummyNotes())
-    }
+    private val _noteDao = AppDatabase.getInstance().noteDao()
 
     private val _newNoteInsertionListener = MutableSharedFlow<NoteModel>()
     val newNoteInsertionListener: SharedFlow<NoteModel> = _newNoteInsertionListener.asSharedFlow()
@@ -33,35 +33,31 @@ class NotesRepository private constructor() {
     }
 
     fun getAll(): List<NoteModel> {
-        return items
+        return _noteDao.getAll().map {
+            it.toModel()
+        }
     }
 
     fun get(id: Int): NoteModel {
-        return items.first { it.id == id }
+        return _noteDao.getItem(id).toModel()
     }
 
     suspend fun insert(item: NoteModel): Int {
-        val newId = items.size + 1
+        val newId = _noteDao.insertItem(item.toEntity()).toInt()
         val newNote = item.copy(
             id = newId
         )
-        items.add(newNote)
         _newNoteInsertionListener.emit(item)
         return newId
     }
 
     suspend fun update(item: NoteModel) {
-        val itemIndex = items.indexOfFirst { it.id == item.id }
-        items[itemIndex] = item
+        _noteDao.updateItem(item.toEntity())
         _updateNoteListener.emit(item)
     }
 
     suspend fun delete(id: Int) {
-        val itemIndex = items.indexOfFirst { it.id == id }
-
-        if (itemIndex != -1) {
-            items.removeAt(itemIndex)
-        }
+        _noteDao.deleteItem(id)
 
         _deleteNoteListener.emit(id)
     }

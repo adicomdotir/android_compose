@@ -18,8 +18,6 @@ const val TAG = ""
 class AddNoteViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
-
     private val repository: NotesRepository = NotesRepository.getInstance()
     private var _noteId: Int = -1
     private var _title: MutableStateFlow<String> = MutableStateFlow("")
@@ -40,10 +38,12 @@ class AddNoteViewModel(
 
         Timber.tag(TAG).d("init: noteId = $noteId")
 
-        if (noteId != -1) {
-            val note = repository.get(noteId)
-            _title.value = note.title
-            _description.value = note.description
+        viewModelScope.launch(Dispatchers.IO) {
+            if (noteId != -1) {
+                val note = repository.get(noteId)
+                _title.value = note.title
+                _description.value = note.description
+            }
         }
     }
 
@@ -86,7 +86,7 @@ class AddNoteViewModel(
         _showConfirmationDialog.value = true
     }
 
-    fun deleteNote() = viewModelScope.launch {
+    fun deleteNote() = viewModelScope.launch(Dispatchers.IO) {
         val itemId = _noteId
         repository.delete(itemId)
 
@@ -97,9 +97,7 @@ class AddNoteViewModel(
         }
     }
 
-
     sealed class Event {
         object NavigateBack : Event()
     }
-
 }

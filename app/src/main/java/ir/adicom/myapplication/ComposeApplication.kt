@@ -1,6 +1,7 @@
 package ir.adicom.myapplication
 
 import android.app.Application
+import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -12,5 +13,10 @@ class ComposeApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+        appContext = applicationContext
+    }
+
+    companion object {
+        lateinit var appContext: Context
     }
 }

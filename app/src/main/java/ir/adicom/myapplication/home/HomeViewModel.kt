@@ -7,6 +7,7 @@ import ir.adicom.myapplication.Routes
 import ir.adicom.myapplication.models.NoteModel
 import ir.adicom.myapplication.repository.NotesRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -24,8 +25,11 @@ class HomeViewModel : ViewModel() {
     private val _scope = viewModelScope
 
     init {
-        val items = repository.getAll()
-        notesList.addAll(items)
+        _scope.launch(Dispatchers.IO) {
+            val items = repository.getAll()
+            delay(500)
+            notesList.addAll(items)
+        }
 
         _scope.launch {
             repository.newNoteInsertionListener.collect { newNote ->
@@ -63,6 +67,6 @@ class HomeViewModel : ViewModel() {
     }
 
     sealed class HomeEvent {
-        data class NavigateNext(val route: String): HomeEvent()
+        data class NavigateNext(val route: String) : HomeEvent()
     }
 }

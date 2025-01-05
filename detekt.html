@@ -157,9 +157,9 @@
 
 <div>
   <ul>
-    <li>53 number of properties</li>
-    <li>23 number of functions</li>
-    <li>13 number of classes</li>
+    <li>59 number of properties</li>
+    <li>25 number of functions</li>
+    <li>11 number of classes</li>
     <li>7 number of packages</li>
     <li>15 number of kt files</li>
   </ul>
@@ -170,22 +170,22 @@
 
 <div>
   <ul>
-    <li>800 lines of code (loc)</li>
-    <li>613 source lines of code (sloc)</li>
-    <li>359 logical lines of code (lloc)</li>
-    <li>104 comment lines of code (cloc)</li>
-    <li>39 cyclomatic complexity (mcc)</li>
-    <li>18 cognitive complexity</li>
-    <li>9 number of total code smells</li>
-    <li>16% comment source ratio</li>
-    <li>108 mcc per 1,000 lloc</li>
-    <li>25 code smells per 1,000 lloc</li>
+    <li>874 lines of code (loc)</li>
+    <li>685 source lines of code (sloc)</li>
+    <li>415 logical lines of code (lloc)</li>
+    <li>101 comment lines of code (cloc)</li>
+    <li>44 cyclomatic complexity (mcc)</li>
+    <li>20 cognitive complexity</li>
+    <li>7 number of total code smells</li>
+    <li>14% comment source ratio</li>
+    <li>106 mcc per 1,000 lloc</li>
+    <li>16 code smells per 1,000 lloc</li>
   </ul>
 </div>
 
 
 <h2>Findings</h2>
-<div>Total: 9
+<div>Total: 7
   <h3>complexity: 1</h3>
   <details id="LongMethod" open="open">
     <summary class="rule-container"><span class="rule">LongMethod: 1 </span><span class="description">One method should have one responsibility. Long methods tend to handle many things at once. Prefer smaller methods to make them easier to understand.</span></summary>
@@ -203,21 +203,11 @@
       </li>
     </ul>
   </details>
-  <h3>naming: 2</h3>
+  <h3>naming: 1</h3>
   <details id="VariableNaming" open="open">
-    <summary class="rule-container"><span class="rule">VariableNaming: 2 </span><span class="description">Variable names should follow the naming convention set in the projects configuration.</span></summary>
+    <summary class="rule-container"><span class="rule">VariableNaming: 1 </span><span class="description">Variable names should follow the naming convention set in the projects configuration.</span></summary>
 <a href="https://detekt.dev/docs/rules/naming#variablenaming">Documentation</a>
     <ul>
-      <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/AddNoteViewModel.kt:20:17</span><span class="message">Private variable names should match the pattern: (_)?[a-z][A-Za-z0-9]*</span>
-        <pre><code><span class="lineno">  17 </span>    private val savedStateHandle: SavedStateHandle,
-<span class="lineno">  18 </span>) : ViewModel() {
-<span class="lineno">  19 </span>
-<span class="lineno">  20 </span>    private val <span class="error">TAG</span> = &quot;AddNoteViewModel&quot;
-<span class="lineno">  21 </span>
-<span class="lineno">  22 </span>    private val repository: NotesRepository = NotesRepository.getInstance()
-<span class="lineno">  23 </span>    private var _noteId: Int = -1
-</code></pre>
-      </li>
       <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/home/HomeViewModel.kt:17:17</span><span class="message">Private variable names should match the pattern: (_)?[a-z][A-Za-z0-9]*</span>
         <pre><code><span class="lineno">  14 </span>import timber.log.Timber
 <span class="lineno">  15 </span>
@@ -230,23 +220,7 @@
       </li>
     </ul>
   </details>
-  <h3>style: 6</h3>
-  <details id="ForbiddenComment" open="open">
-    <summary class="rule-container"><span class="rule">ForbiddenComment: 1 </span><span class="description">Flags a forbidden comment.</span></summary>
-<a href="https://detekt.dev/docs/rules/style#forbiddencomment">Documentation</a>
-    <ul>
-      <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/test/java/ir/adicom/myapplication/data/DefaultMyModelRepositoryTest.kt:15:42</span><span class="message">Forbidden TODO todo marker in comment, please do the changes.</span>
-        <pre><code><span class="lineno">  12 </span>/**
-<span class="lineno">  13 </span> * Unit tests for [DefaultMyModelRepository].
-<span class="lineno">  14 </span> */
-<span class="lineno">  15 </span>@OptIn(ExperimentalCoroutinesApi::class) <span class="error">// TODO: Remove when stable</span>
-<span class="lineno">  16 </span>class DefaultMyModelRepositoryTest {
-<span class="lineno">  17 </span>
-<span class="lineno">  18 </span>    @Test
-</code></pre>
-      </li>
-    </ul>
-  </details>
+  <h3>style: 5</h3>
   <details id="NewLineAtEndOfFile" open="open">
     <summary class="rule-container"><span class="rule">NewLineAtEndOfFile: 5 </span><span class="description">Checks whether files end with a line separator.</span></summary>
 <a href="https://detekt.dev/docs/rules/style#newlineatendoffile">Documentation</a>
@@ -258,18 +232,18 @@
 <span class="lineno">   6 </span>}
 </code></pre>
       </li>
-      <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/AddNoteScreen.kt:95:2</span><span class="message">The file /Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/AddNoteScreen.kt is not ending with a new line.</span>
-        <pre><code><span class="lineno">  92 </span>            placeholder = { Text(text = &quot;Enter Description&quot;) }
-<span class="lineno">  93 </span>        )
-<span class="lineno">  94 </span>    }
-<span class="lineno">  95 </span>}
+      <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/AddNoteScreen.kt:112:2</span><span class="message">The file /Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/AddNoteScreen.kt is not ending with a new line.</span>
+        <pre><code><span class="lineno"> 109 </span>            },
+<span class="lineno"> 110 </span>        )
+<span class="lineno"> 111 </span>    }
+<span class="lineno"> 112 </span>}
 </code></pre>
       </li>
-      <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/AddNoteViewModel.kt:82:2</span><span class="message">The file /Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/AddNoteViewModel.kt is not ending with a new line.</span>
-        <pre><code><span class="lineno">  79 </span>        object NavigateBack : Event()
-<span class="lineno">  80 </span>    }
-<span class="lineno">  81 </span>
-<span class="lineno">  82 </span>}
+      <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/components/ConfirmationDialog.kt:53:2</span><span class="message">The file /Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/addNote/components/ConfirmationDialog.kt is not ending with a new line.</span>
+        <pre><code><span class="lineno">  50 </span>            }
+<span class="lineno">  51 </span>        }
+<span class="lineno">  52 </span>    )
+<span class="lineno">  53 </span>}
 </code></pre>
       </li>
       <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/home/HomeScreen.kt:129:2</span><span class="message">The file /Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/home/HomeScreen.kt is not ending with a new line.</span>
@@ -279,11 +253,11 @@
 <span class="lineno"> 129 </span>}
 </code></pre>
       </li>
-      <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/repository/NotesRepository.kt:56:2</span><span class="message">The file /Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/repository/NotesRepository.kt is not ending with a new line.</span>
-        <pre><code><span class="lineno">  53 </span>        _updateNoteInsertionListener.emit(item)
-<span class="lineno">  54 </span>    }
-<span class="lineno">  55 </span>
-<span class="lineno">  56 </span>}
+      <li><span class="location">/Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/repository/NotesRepository.kt:69:2</span><span class="message">The file /Users/yasharpanahi/AndroidStudioProjects/compose_ui/app/src/main/java/ir/adicom/myapplication/repository/NotesRepository.kt is not ending with a new line.</span>
+        <pre><code><span class="lineno">  66 </span>        _deleteNoteListener.emit(id)
+<span class="lineno">  67 </span>    }
+<span class="lineno">  68 </span>
+<span class="lineno">  69 </span>}
 </code></pre>
       </li>
     </ul>
@@ -291,7 +265,7 @@
 </div>
 
 
-generated with <a href="https://detekt.dev/">detekt version 1.23.7</a> on 2025-01-03 18:54:07 UTC.
+generated with <a href="https://detekt.dev/">detekt version 1.23.7</a> on 2025-01-04 19:45:03 UTC.
 
 </body>
 </html>
