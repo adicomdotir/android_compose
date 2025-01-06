@@ -10,7 +10,7 @@ data class NoteModel(
 
 fun NoteModel.toEntity(): NoteEntity {
     return NoteEntity(
-        id, title, description
+        id = if (id != -1) id else null, title, description
     )
 }
 

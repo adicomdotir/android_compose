@@ -6,7 +6,7 @@ import ir.adicom.myapplication.core.domain.models.NoteModel
 
 @Entity(tableName = "notes")
 data class NoteEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = -1,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
     val title: String?,
     val description: String?
 )
