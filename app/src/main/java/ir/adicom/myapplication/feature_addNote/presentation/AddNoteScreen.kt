@@ -23,13 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import ir.adicom.myapplication.R
 import ir.adicom.myapplication.feature_addNote.presentation.components.ConfirmationDialog
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AddNoteScreen(
-    viewModel: AddNoteViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: AddNoteViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
 ) {
     val title = viewModel.title.collectAsState()

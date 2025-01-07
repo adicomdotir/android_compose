@@ -1,6 +1,5 @@
 package ir.adicom.myapplication.core.domain.repository
 
-import ir.adicom.myapplication.core.data.local.NoteEntity
 import ir.adicom.myapplication.core.domain.models.NoteModel
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -9,7 +8,7 @@ interface NotesRepository {
     val updateNoteListener: SharedFlow<NoteModel>
     val deleteNoteListener: SharedFlow<Int>
 
-    suspend fun getAll(): List<NoteEntity>
+    suspend fun getAll(): List<NoteModel>
 
     suspend fun get(id: Int): NoteModel
 

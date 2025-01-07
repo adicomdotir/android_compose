@@ -3,6 +3,7 @@ package ir.adicom.myapplication.feature_addNote.presentation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.adicom.myapplication.core.domain.models.NoteModel
 import ir.adicom.myapplication.feature_addNote.domain.AddNoteUseCase
 import ir.adicom.myapplication.feature_addNote.domain.DeleteNoteUseCase
@@ -14,16 +15,18 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 const val TAG = ""
 
-class AddNoteViewModel(
+@HiltViewModel
+class AddNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val getNoteUseCase: GetNoteUseCase,
+    private val deleteNoteUseCase: DeleteNoteUseCase,
+    private val addNoteUseCase: AddNoteUseCase,
 ) : ViewModel() {
 
-    private val getNoteUseCase = GetNoteUseCase.getInstance()
-    private val deleteNoteUseCase = DeleteNoteUseCase.getInstance()
-    private val addNoteUseCase = AddNoteUseCase.getInstance()
     private var _noteId: Int = -1
     private var _title: MutableStateFlow<String> = MutableStateFlow("")
     val title = _title.asStateFlow()

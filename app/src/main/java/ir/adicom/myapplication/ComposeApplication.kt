@@ -13,10 +13,5 @@ class ComposeApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-        appContext = applicationContext
-    }
-
-    companion object {
-        lateinit var appContext: Context
     }
 }

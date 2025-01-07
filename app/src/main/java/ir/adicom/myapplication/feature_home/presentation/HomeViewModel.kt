@@ -3,6 +3,7 @@ package ir.adicom.myapplication.feature_home.presentation
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.adicom.myapplication.Routes
 import ir.adicom.myapplication.core.domain.models.NoteModel
 import ir.adicom.myapplication.feature_home.domain.GetNotesUseCase
@@ -15,12 +16,15 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getNotesUseCase: GetNotesUseCase,
+    private val listenNotesUseCase: ListenNotesUseCase
+) : ViewModel() {
+
     private val TAG = "HomeViewModel"
-
-    private val getNotesUseCase = GetNotesUseCase.getInstance()
-    private val listenNotesUseCase = ListenNotesUseCase.getInstance()
     val notesList = mutableStateListOf<NoteModel>()
     private val _eventFlow = MutableSharedFlow<HomeEvent>()
     val eventFlow: SharedFlow<HomeEvent> = _eventFlow.asSharedFlow()
@@ -59,7 +63,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun action(action: HomeAction) {
-        when(action) {
+        when (action) {
             HomeAction.AddNewNote -> addNewNote()
             is HomeAction.ListItemOnClick -> listItemOnClick(action.value)
         }

@@ -25,13 +25,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import ir.adicom.myapplication.R
 import ir.adicom.myapplication.Routes
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
     navigateNext: (String) -> Unit
 ) {
     val notes = viewModel.notesList
