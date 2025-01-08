@@ -48,7 +48,7 @@ class AddNoteViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             if (noteId != -1) {
-                val note = getNoteUseCase.execute(noteId)
+                val note = getNoteUseCase.execute(noteId) ?: return@launch
                 _title.value = note.title
                 _description.value = note.description
             }

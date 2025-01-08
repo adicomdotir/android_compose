@@ -10,7 +10,7 @@ class GetNoteUseCase(
 ) {
 
 
-    suspend fun execute(id: Int): NoteModel {
+    suspend fun execute(id: Int): NoteModel? {
         return withContext(Dispatchers.IO) {
             repository.get(id)
         }

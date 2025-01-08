@@ -2,6 +2,7 @@ package ir.adicom.myapplication.core.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
@@ -11,9 +12,9 @@ interface NoteDao {
     fun getAll(): List<NoteEntity>
 
     @Query("SELECT * FROM notes WHERE id = :id LIMIT 1")
-    fun getItem(id: Int): NoteEntity
+    fun getItem(id: Int): NoteEntity?
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertItem(noteEntity: NoteEntity): Long
 
     @Update

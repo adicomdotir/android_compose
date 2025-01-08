@@ -26,8 +26,8 @@ class NotesRepositoryImpl(private val noteDao: NoteDao) : NotesRepository {
         return noteDao.getAll().map { it.toModel() }
     }
 
-    override suspend fun get(id: Int): NoteModel {
-        return noteDao.getItem(id).toModel()
+    override suspend fun get(id: Int): NoteModel? {
+        return noteDao.getItem(id)?.toModel()
     }
 
     override suspend fun insert(item: NoteModel): Int {
