@@ -10,6 +10,8 @@ import dagger.hilt.components.SingletonComponent
 import ir.adicom.myapplication.core.data.local.AppDatabase
 import ir.adicom.myapplication.core.data.repository.NotesRepositoryImpl
 import ir.adicom.myapplication.core.domain.repository.NotesRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -29,5 +31,19 @@ object AppModule {
     @Singleton
     fun provideNotesRepository(appDatabase: AppDatabase): NotesRepository {
         return NotesRepositoryImpl(appDatabase.noteDao())
+    }
+
+    @IODispatcher
+    @Provides
+    @Singleton
+    fun provideIODispatcher(): CoroutineDispatcher {
+        return Dispatchers.IO
+    }
+
+    @MainDispatcher
+    @Provides
+    @Singleton
+    fun provideMainDispatcher(): CoroutineDispatcher {
+        return Dispatchers.Main
     }
 }
