@@ -4,11 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.adicom.myapplication.core.di.IODispatcher
+import ir.adicom.myapplication.core.di.MainDispatcher
 import ir.adicom.myapplication.core.domain.models.NoteModel
 import ir.adicom.myapplication.feature_addNote.domain.AddNoteUseCase
 import ir.adicom.myapplication.feature_addNote.domain.DeleteNoteUseCase
 import ir.adicom.myapplication.feature_addNote.domain.GetNoteUseCase
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -25,6 +27,8 @@ class AddNoteViewModel @Inject constructor(
     private val getNoteUseCase: GetNoteUseCase,
     private val deleteNoteUseCase: DeleteNoteUseCase,
     private val addNoteUseCase: AddNoteUseCase,
+    @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+    @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private var _noteId: Int = -1
@@ -46,7 +50,7 @@ class AddNoteViewModel @Inject constructor(
 
         Timber.tag(TAG).d("init: noteId = $noteId")
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             if (noteId != -1) {
                 val note = getNoteUseCase.execute(noteId) ?: return@launch
                 _title.value = note.title
@@ -75,7 +79,7 @@ class AddNoteViewModel @Inject constructor(
         _description.value = value
     }
 
-    private fun backIconOnClick() = viewModelScope.launch(Dispatchers.IO) {
+    private fun backIconOnClick() = viewModelScope.launch(ioDispatcher) {
 
         val noteModel = NoteModel(
             id = _noteId,
@@ -87,7 +91,7 @@ class AddNoteViewModel @Inject constructor(
         addNoteUseCase.execute(noteModel)
 
         // Navigate Back
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(mainDispatcher) {
             _event.emit(AddNoteEvent.NavigateBack)
         }
 
@@ -101,13 +105,13 @@ class AddNoteViewModel @Inject constructor(
         _showConfirmationDialog.value = true
     }
 
-    private fun deleteNote() = viewModelScope.launch(Dispatchers.IO) {
+    private fun deleteNote() = viewModelScope.launch(ioDispatcher) {
         val itemId = _noteId
         deleteNoteUseCase.execute(itemId)
 
         hideConfirmationDialog()
         // Navigate Back
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(mainDispatcher) {
             _event.emit(AddNoteEvent.NavigateBack)
         }
     }
